@@ -39,7 +39,7 @@ function make_menu_item_div(menu_item, selected_menu){
 	return result;
 }
 
-function make_menu_div(menu_data, selected_menu){
+function show_menu(menu_data, selected_menu){
 	menu_text = "";
     for(var i=0; i< menu_data.length; i++){
     	menu_text += make_menu_item_div(menu_data[i], selected_menu);
@@ -47,64 +47,10 @@ function make_menu_div(menu_data, selected_menu){
   
     menu_text = "<ul>" + menu_text + "</ul>";
     $('.menu-container').html(menu_text);
+	show();
 }
 
-MENU_DATA = [
-{
-	"name": "name1",
-	"url": "#",
-	"sort": 0
-},
-{
-	"name": "name2",
-	"sort": 1,
-	"submenu":[
-	{
-		"name": "name2-name0",
-		"sort": 0,
-		"submenu":
-			[
-			{
-				"name": "name2-name0-name0",
-				"url": "#",
-				"sort": 0
-			},
-			{
-				"name": "name2-name0-name1",
-				"url": "#",
-				"sort": 1
-			}
-			]
-	},
-	{
-		"name": "name2-name1",
-		"sort": 0,
-		"url":"#"
-	}
-	]
-},
-{
-	"name": "name2-name0",
-	"sort": 0,
-	"submenu":
-		[
-		{
-			"name": "name2-name0-name0",
-			"url": "#",
-			"sort": 0
-		},
-		{
-			"name": "name2-name0-name1",
-			"url": "#",
-			"sort": 1
-		}
-		]
-}
-]
-
-$(function() {
-	make_menu_div(MENU_DATA, "www.google.com");
-
+function show() {
 	var classes = {
 		ACTIVE: 'active',
 		COLLAPSE_ICON: 'glyphicon-chevron-up',
@@ -137,7 +83,6 @@ $(function() {
 
 	function scrollActiveMenuItemIntoView() {
 		var $active = $(selectors.MENU_CONTAINER + ' ' + selectors.ACTIVE);
-
 		$(selectors.MENU_CONTAINER).animate({
 			scrollTop: $active.offset().top
 		});
@@ -148,22 +93,19 @@ $(function() {
 	item = item_span.parent();
 	item.click(function (ev) {
 		ev.preventDefault();
-
 		var $icon = $(this).find(selectors.COLLAPSE_ICON + ',' + selectors.EXPAND_ICON) 
-			if ($icon.hasClass(classes.COLLAPSE_ICON)) {
-				slideUp($icon);
-			} else if ($icon.hasClass(classes.EXPAND_ICON)) {
-				slideDown($icon);
-			}
+		if ($icon.hasClass(classes.COLLAPSE_ICON)) {
+			slideUp($icon);
+		} else if ($icon.hasClass(classes.EXPAND_ICON)) {
+			slideDown($icon);
+		}
 	});
 	item_redirect = $(selectors.MENU_CONTAINER).find(selectors.REDIRECT);
 	item_redirect.click(function (ev){
-
 		var content_container = $(selectors.CONTENT_CONTAINER);
-
+		//TODO fetch url request
 		var load_content_from_request = "<div>this is main page</div>"
 		content_container.html(load_content_from_request);
-		console.log(content_container);
 	});
 
 	// collapse all menu items on page load
@@ -175,16 +117,13 @@ $(function() {
 	function expandMenuItems() {
 		function expandMenuItemsHelper($li) {
 			var $collapsedIcon = $li.children().find(selectors.GLYPHICON).first();
-
 			if ($collapsedIcon.length) {
 				slideDown($collapsedIcon);
 			}
-
 			if ($li.parent().closest('li').length) {
 				expandMenuItemsHelper($li.parent().closest('li').first());
 			}
 		}
-
 		expandMenuItemsHelper($(selectors.MENU_CONTAINER + ' ' + selectors.ACTIVE));
 	}
 	expandMenuItems();
@@ -193,4 +132,4 @@ $(function() {
 		$(selectors.MENU_CONTAINER).show();
 		scrollActiveMenuItemIntoView();
 	}, 200);
-});
+}

@@ -1,20 +1,90 @@
 <!DOCTYPE html>
 <html >
-  <head>
-    <meta charset="UTF-8">
-    <title>tree menu testing</title>
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
-    <link rel="stylesheet" href="menu-tree/style.css">
-  </head>
+	<head>
+		<meta charset="UTF-8">
+		<title>tree menu testing</title>
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+		<link rel="stylesheet" href="menu-tree/style.css">
+	</head>
 
-  <body>
-    <div class="menu-container">
-    </div>
-    <div class="content-container">
-    </div>
-    
-    <script src='jquery.min.js'></script>
-    <script src='bootstrap.min.js'></script>
-    <script src="menu-tree/index.js"></script>
-  </body>
+	<body>
+		<div class="header-container">
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<button class="btn btn-default dropdown-toggle header-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					下拉菜单
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu header-menu" >
+					<li><a href="#">菜单</a></li>
+					<li><a href="#">菜单</a></li>
+					<li><a href="#">菜单</a></li>
+					<li><a href="#">菜单</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="menu-container">
+		</div>
+		<div class="content-container">
+		</div>
+
+		<script src='jquery.min.js'></script>
+		<script src='bootstrap.min.js'></script>
+		<script src="menu-tree/index.js"></script>
+		<script> 
+var MENU_DATA = [
+{
+	"name": "name1",
+	"url": "#",
+	"sort": 0
+},
+{
+	"name": "name2",
+	"sort": 1,
+	"submenu":[
+	{
+		"name": "name2-name0",
+		"sort": 0,
+		"submenu":
+			[
+			{
+				"name": "name2-name0-name0",
+				"url": "#",
+				"sort": 0
+			},
+			{
+				"name": "name2-name0-name1",
+				"url": "#",
+				"sort": 1
+			}
+			]
+	},
+	{
+		"name": "name2-name1",
+		"sort": 0,
+		"url":"#"
+	}
+	]
+},
+{
+	"name": "name2-name0",
+	"sort": 0,
+	"submenu":
+		[
+		{
+			"name": "name2-name0-name0",
+			"url": "#",
+			"sort": 0
+		},
+		{
+			"name": "name2-name0-name1",
+			"url": "#",
+			"sort": 1
+		}
+		]
+}
+]
+			show_menu(MENU_DATA, "www.google.com");
+		</script>
+	</body>
 </html>

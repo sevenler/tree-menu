@@ -1,7 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/*标题栏样式*/
+.header-container {
+	height: 200px;
+}
+.header-btn {
+  width: 100px;
+  height: 50px;
+  margin-left: 250px;
+}
+.header-menu {
+ margin-left: 250px;
+}
+
+/*菜单样式*/
 .menu-container {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 50px;
   bottom: 0;
   margin: 0;
   overflow-y: auto;
@@ -11,10 +30,6 @@
   width: 250px;
   font-size: 1em;
   display: none;
-}
-.content-container {
-	position: fixed;
-	float:right;
 }
 .menu-container * {
   margin: 0;
@@ -44,4 +59,14 @@
   margin-left: .5em;
   opacity: .25;
   float: right;
+}
+
+/*内容区块*/
+.content-container {
+  position: fixed;
+  right: 0px;
+  top: 50px;
+  height: 100%;
+  background: #BEBEDB;
+  left: 250px;
 }
