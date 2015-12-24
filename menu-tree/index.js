@@ -26,7 +26,7 @@ function make_menu_item_div(menu_item, selected_menu){
 
 	var result = "";
 	if(submenu == undefined){
-        result += "<li class='{2}'><a href='{0}'>{1}</a></li>".format(menu_item.url, menu_item.name,
+        result += "<li class='redirect {2}'><a href='{0}'>{1}</a></li>".format(menu_item.url, menu_item.name,
 				(selected_menu == menu_item.url) ? "active" : "");
 	}else {
 		var sub_result = "";
@@ -52,7 +52,7 @@ function make_menu_div(menu_data, selected_menu){
 MENU_DATA = [
 {
 	"name": "name1",
-	"url": "www.baidu.com",
+	"url": "#",
 	"sort": 0
 },
 {
@@ -66,12 +66,12 @@ MENU_DATA = [
 			[
 			{
 				"name": "name2-name0-name0",
-				"url": "www.36kr.com",
+				"url": "#",
 				"sort": 0
 			},
 			{
 				"name": "name2-name0-name1",
-				"url": "www.36kr.com",
+				"url": "#",
 				"sort": 1
 			}
 			]
@@ -79,7 +79,7 @@ MENU_DATA = [
 	{
 		"name": "name2-name1",
 		"sort": 0,
-		"url":"www.google.com"
+		"url":"#"
 	}
 	]
 },
@@ -90,12 +90,12 @@ MENU_DATA = [
 		[
 		{
 			"name": "name2-name0-name0",
-			"url": "www.36kr.com",
+			"url": "#",
 			"sort": 0
 		},
 		{
 			"name": "name2-name0-name1",
-			"url": "www.36kr.com",
+			"url": "#",
 			"sort": 1
 		}
 		]
@@ -110,7 +110,9 @@ $(function() {
 		COLLAPSE_ICON: 'glyphicon-chevron-up',
 		EXPAND_ICON: 'glyphicon-chevron-down',
 		GLYPHICON: 'glyphicon',
-		MENU_CONTAINER: 'menu-container'
+		MENU_CONTAINER: 'menu-container',
+		REDIRECT:"redirect",
+		CONTENT_CONTAINER: 'content-container'
 	},
 	selectors = {},
 	config = {
@@ -154,6 +156,15 @@ $(function() {
 				slideDown($icon);
 			}
 	});
+	item_redirect = $(selectors.MENU_CONTAINER).find(selectors.REDIRECT);
+	item_redirect.click(function (ev){
+
+		var content_container = $(selectors.CONTENT_CONTAINER);
+
+		var load_content_from_request = "<div>this is main page</div>"
+		content_container.html(load_content_from_request);
+		console.log(content_container);
+	});
 
 	// collapse all menu items on page load
 	$(selectors.MENU_CONTAINER + ' ' + selectors.COLLAPSE_ICON).each(function (index) {
@@ -177,8 +188,7 @@ $(function() {
 		expandMenuItemsHelper($(selectors.MENU_CONTAINER + ' ' + selectors.ACTIVE));
 	}
 	expandMenuItems();
-
-
+	
 	setTimeout(function() {
 		$(selectors.MENU_CONTAINER).show();
 		scrollActiveMenuItemIntoView();

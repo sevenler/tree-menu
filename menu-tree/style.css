@@ -12,6 +12,10 @@
   font-size: 1em;
   display: none;
 }
+.content-container {
+	position: fixed;
+	float:right;
+}
 .menu-container * {
   margin: 0;
   padding: 0;
