@@ -21,25 +21,20 @@ String.prototype.format = function(args) {
 	return result;
 }
 
-function make_menu_item_div(menu_item){
+function make_menu_item_div(menu_item, selected_menu){
 	var submenu = menu_item.submenu;
 
 	var result = "";
 	if(submenu == undefined){
-		+= "<li class=''><a href='{0}'>{1}</a></li>".format(menu_item.url, menu_item.name);
+        result += "<li class='{2}'><a href='{0}'>{1}</a></li>".format(menu_item.url, menu_item.name,
+				(selected_menu == menu_item.url) ? "active" : "");
 	}else {
 		var sub_result = "";
 		for(var i=0; i<submenu.length; i++){
-			sub_result += make_menu_item_div(submenu[i]);
+			sub_result += make_menu_item_div(submenu[i], selected_menu);
 		}
 		sub_result = "<ul>" + sub_result + "</ul>";
-		result += "<li class=''>\
-				   <a href='#'>\
-				 	  {0} <span class='glyphicon glyphicon-chevron-up'></span> \
-		           </a>\
-	               {1}\
-				   </li>"
-			.format(menu_item.name, sub_result);
+		result += "<li class=''> <a href='#'> {0} <span class='glyphicon glyphicon-chevron-up'></span></a>{1}</li>".format(menu_item.name, sub_result);
 	}
 	return result;
 }
@@ -47,7 +42,7 @@ function make_menu_item_div(menu_item){
 function make_menu_div(menu_data, selected_menu){
 	menu_text = "";
     for(var i=0; i< menu_data.length; i++){
-    	menu_text += make_menu_item_div(menu_data[i]);
+    	menu_text += make_menu_item_div(menu_data[i], selected_menu);
     }
   
     menu_text = "<ul>" + menu_text + "</ul>";
@@ -80,13 +75,35 @@ MENU_DATA = [
 				"sort": 1
 			}
 			]
+	},
+	{
+		"name": "name2-name1",
+		"sort": 0,
+		"url":"www.google.com"
 	}
 	]
+},
+{
+	"name": "name2-name0",
+	"sort": 0,
+	"submenu":
+		[
+		{
+			"name": "name2-name0-name0",
+			"url": "www.36kr.com",
+			"sort": 0
+		},
+		{
+			"name": "name2-name0-name1",
+			"url": "www.36kr.com",
+			"sort": 1
+		}
+		]
 }
 ]
 
 $(function() {
-	make_menu_div(MENU_DATA);
+	make_menu_div(MENU_DATA, "www.google.com");
 
 	var classes = {
 		ACTIVE: 'active',
